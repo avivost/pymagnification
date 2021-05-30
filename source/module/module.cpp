@@ -21,18 +21,6 @@ PYBIND11_MODULE(pymagnification, module)
 	//set and get mag window source
 	module.def("MagSetWindowTransform", [](int hwnd, std::array<std::array<float, 3>, 3> v)->BOOL
 		{
-
-			/*
-			* pybind11::buffer b
-			std::vector<ssize_t> source_shape = b.request().shape;
-			ssize_t number_of_dimentions = b.request().ndim;
-			if (number_of_dimentions != 2
-				||  source_shape[0] !=3
-				|| source_shape[1] !=3)
-			{
-				std::string ex = "wrong dimientions should be a matrix of 3x3, got" + std::to_string(source_shape[0]) + "x" + std::to_string(source_shape[1]) + "and with" + std::to_string(number_of_dimentions) + "number of dimentions";
-				std::exception(ex);
-			}*/
 			MAGTRANSFORM matrix ;
 			memset(&matrix, 0, sizeof(matrix)); 
 			for (size_t i = 0; i < 3; i++)
@@ -50,8 +38,14 @@ PYBIND11_MODULE(pymagnification, module)
 			RECT magWindowRect = { left,top,right,bottom };
 			return MagSetWindowSource((HWND)hwnd, magWindowRect);
 		});
-
 	//init and unint mag
+	module.def("MagGetWindowSource", [](int hwnd)->std::tuple<long , long , long , long >
+	{
+		RECT magWindowRect;
+		MagGetWindowSource((HWND)hwnd, &magWindowRect);
+		return std::make_tuple(magWindowRect.left, magWindowRect.top, magWindowRect.right, magWindowRect.bottom);
+
+	});
 	module.def("MagInitialize", &MagInitialize);
 	module.def("MagUninitialize", &MagUninitialize);
 
