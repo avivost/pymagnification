@@ -8,7 +8,6 @@
 PYBIND11_MODULE(pymagnification, module)
 {
 	module.doc() = "pymagnification";
-
 	module.attr("WC_MAGNIFIER") = WC_MAGNIFIER;
 	// Magnifier Window Styles
 	module.attr("MS_SHOWMAGNIFIEDCURSOR") = MS_SHOWMAGNIFIEDCURSOR;
@@ -60,6 +59,21 @@ PYBIND11_MODULE(pymagnification, module)
 			MagGetWindowSource((HWND)hwnd, &magWindowRect);
 			return std::make_tuple(magWindowRect.left, magWindowRect.top, magWindowRect.right, magWindowRect.bottom);
 
+		});
+	//get and set window filters
+	module.def("MagSetWindowFilterList", [](int hwnd, int dwFilterMode, int count, std::vector<int> pHWND)->BOOL 
+		{
+
+			return MagSetWindowFilterList((HWND)hwnd, (DWORD)dwFilterMode, count,(HWND*)&(pHWND[0]));
+		});
+	module.def("MagGetWindowFilterList", [](int hwnd)->std::tuple<int,int ,std::vector<int>>
+		{
+			DWORD dwFilterMode;
+			int amount_of_window_handles=MagGetWindowFilterList((HWND)hwnd, &dwFilterMode,0,nullptr);
+				std::vector<int> hwnds(amount_of_window_handles);
+				amount_of_window_handles = MagGetWindowFilterList((HWND)hwnd, &dwFilterMode, amount_of_window_handles, (HWND*)hwnds.empty() ? NULL : (HWND*)&hwnds[0]);
+				return std::make_tuple(amount_of_window_handles, (int)dwFilterMode, hwnds);
+			
 		});
 	//init and unint mag
 	module.def("MagInitialize", &MagInitialize);
