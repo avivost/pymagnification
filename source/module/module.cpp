@@ -18,11 +18,11 @@ PYBIND11_MODULE(pymagnification, module)
 	module.attr("MW_FILTERMODE_EXCLUDE") = MW_FILTERMODE_EXCLUDE;
 	module.attr("MW_FILTERMODE_INCLUDE") = MW_FILTERMODE_INCLUDE;
 
-	//set and get mag window source
+	//get and set mag window transform
 	module.def("MagSetWindowTransform", [](int hwnd, std::array<std::array<float, 3>, 3> v)->BOOL
 		{
-			MAGTRANSFORM matrix ;
-			memset(&matrix, 0, sizeof(matrix)); 
+			MAGTRANSFORM matrix;
+			memset(&matrix, 0, sizeof(matrix));
 			for (size_t i = 0; i < 3; i++)
 			{
 				for (size_t j = 0; j < 3; j++)
@@ -30,22 +30,38 @@ PYBIND11_MODULE(pymagnification, module)
 					matrix.v[i][j] = v[i][j];
 				}
 			}
-			BOOL ret = MagSetWindowTransform((HWND) hwnd, &matrix);
+			BOOL ret = MagSetWindowTransform((HWND)hwnd, &matrix);
 			return ret;
 		});
+	module.def("MagGetWindowTransform", [](int hwnd)->std::array<std::array<float, 3>, 3>
+	{
+		MAGTRANSFORM matrix;
+		MagGetWindowTransform((HWND)hwnd, &matrix);
+		std::array<std::array<float, 3>, 3> v{};
+
+		for (size_t i = 0; i < 3; i++)
+		{
+			for (size_t j = 0; j < 3; j++)
+			{
+				v[i][j] = matrix.v[i][j];
+			}
+		}
+		return v;
+	});
+	//get and set mag window source
 	module.def("MagSetWindowSource", [](int hwnd, long left, long top, long right, long bottom)->BOOL 
 		{
 			RECT magWindowRect = { left,top,right,bottom };
 			return MagSetWindowSource((HWND)hwnd, magWindowRect);
 		});
-	//init and unint mag
-	module.def("MagGetWindowSource", [](int hwnd)->std::tuple<long , long , long , long >
-	{
-		RECT magWindowRect;
-		MagGetWindowSource((HWND)hwnd, &magWindowRect);
-		return std::make_tuple(magWindowRect.left, magWindowRect.top, magWindowRect.right, magWindowRect.bottom);
+	module.def("MagGetWindowSource", [](int hwnd)->std::tuple<long, long, long, long >
+		{
+			RECT magWindowRect;
+			MagGetWindowSource((HWND)hwnd, &magWindowRect);
+			return std::make_tuple(magWindowRect.left, magWindowRect.top, magWindowRect.right, magWindowRect.bottom);
 
-	});
+		});
+	//init and unint mag
 	module.def("MagInitialize", &MagInitialize);
 	module.def("MagUninitialize", &MagUninitialize);
 
