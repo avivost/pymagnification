@@ -94,7 +94,7 @@ PYBIND11_MODULE(pymagnification, module)
 
 	});
 
-	//get and set window full screen transform
+	//get and set window color effect
 	module.def("MagGetColorEffect", [](int hwnd)->std::array<std::array<float, 5>, 5>
 	{
 			MAGCOLOREFFECT colormatrix;
@@ -110,7 +110,7 @@ PYBIND11_MODULE(pymagnification, module)
 			}
 			return transform;
 	});
-	module.def("MagSetColorEffect", [](int hwnd, std::array<std::array<float, 5>, 5> transfrom)-> int 
+	module.def("MagSetColorEffect", [](int hwnd, std::array<std::array<float, 5>, 5> transform)-> int
 	{
 		MAGCOLOREFFECT colormatrix;
 		memset(&colormatrix, 0, sizeof(colormatrix));
@@ -118,12 +118,42 @@ PYBIND11_MODULE(pymagnification, module)
 		{
 			for (size_t j = 0; j < 5; j++)
 			{
-				colormatrix.transform[i][j] = transfrom[i][j];
+				colormatrix.transform[i][j] = transform[i][j];
 			}
 		}
 		BOOL ret = MagSetColorEffect((HWND)hwnd, &colormatrix);
 		return ret;
 	});
-	
+
+	//get and set full screen color effect
+	module.def("MagGetFullscreenColorEffect", []()->std::array<std::array<float, 5>, 5>
+	{
+		MAGCOLOREFFECT colormatrix;
+		MagGetFullscreenColorEffect(&colormatrix);
+		std::array<std::array<float, 5>, 5> transform{};
+
+		for (size_t i = 0; i < 5; i++)
+		{
+			for (size_t j = 0; j < 5; j++)
+			{
+				transform[i][j] = colormatrix.transform[i][j];
+			}
+		}
+		return transform;
+	});
+	module.def("MagSetFullscreenColorEffect", [](std::array<std::array<float, 5>, 5> transform)-> int
+	{
+		MAGCOLOREFFECT colormatrix;
+		memset(&colormatrix, 0, sizeof(colormatrix));
+		for (size_t i = 0; i < 5; i++)
+		{
+			for (size_t j = 0; j < 5; j++)
+			{
+				colormatrix.transform[i][j] = transform[i][j];
+			}
+		}
+		BOOL ret = MagSetFullscreenColorEffect(&colormatrix);
+		return ret;
+	});
 
 }
