@@ -94,4 +94,36 @@ PYBIND11_MODULE(pymagnification, module)
 
 	});
 
+	//get and set window full screen transform
+	module.def("MagGetColorEffect", [](int hwnd)->std::array<std::array<float, 5>, 5>
+	{
+			MAGCOLOREFFECT colormatrix;
+			MagGetColorEffect((HWND)hwnd, &colormatrix);
+			std::array<std::array<float, 5>, 5> transform{};
+
+			for (size_t i = 0; i < 5; i++)
+			{
+				for (size_t j = 0; j < 5; j++)
+				{
+					transform[i][j] = colormatrix.transform[i][j];
+				}
+			}
+			return transform;
+	});
+	module.def("MagSetColorEffect", [](int hwnd, std::array<std::array<float, 5>, 5> transfrom)-> int 
+	{
+		MAGCOLOREFFECT colormatrix;
+		memset(&colormatrix, 0, sizeof(colormatrix));
+		for (size_t i = 0; i < 5; i++)
+		{
+			for (size_t j = 0; j < 5; j++)
+			{
+				colormatrix.transform[i][j] = transfrom[i][j];
+			}
+		}
+		BOOL ret = MagSetColorEffect((HWND)hwnd, &colormatrix);
+		return ret;
+	});
+	
+
 }
