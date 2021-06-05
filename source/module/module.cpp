@@ -17,21 +17,11 @@ PYBIND11_MODULE(pymagnification, module)
 	module.attr("MW_FILTERMODE_EXCLUDE") = MW_FILTERMODE_EXCLUDE;
 	module.attr("MW_FILTERMODE_INCLUDE") = MW_FILTERMODE_INCLUDE;
 
+	//init and unint mag
+	module.def("MagInitialize", &MagInitialize);
+	module.def("MagUninitialize", &MagUninitialize);
+
 	//get and set mag window transform
-	module.def("MagSetWindowTransform", [](int hwnd, std::array<std::array<float, 3>, 3> v)->BOOL
-		{
-			MAGTRANSFORM matrix;
-			memset(&matrix, 0, sizeof(matrix));
-			for (size_t i = 0; i < 3; i++)
-			{
-				for (size_t j = 0; j < 3; j++)
-				{
-					matrix.v[i][j] = v[i][j];
-				}
-			}
-			BOOL ret = MagSetWindowTransform((HWND)hwnd, &matrix);
-			return ret;
-		});
 	module.def("MagGetWindowTransform", [](int hwnd)->std::array<std::array<float, 3>, 3>
 	{
 		MAGTRANSFORM matrix;
@@ -47,12 +37,22 @@ PYBIND11_MODULE(pymagnification, module)
 		}
 		return v;
 	});
-	//get and set mag window source
-	module.def("MagSetWindowSource", [](int hwnd, long left, long top, long right, long bottom)->BOOL 
+	module.def("MagSetWindowTransform", [](int hwnd, std::array<std::array<float, 3>, 3> v)->BOOL
 		{
-			RECT magWindowRect = { left,top,right,bottom };
-			return MagSetWindowSource((HWND)hwnd, magWindowRect);
+			MAGTRANSFORM matrix;
+			memset(&matrix, 0, sizeof(matrix));
+			for (size_t i = 0; i < 3; i++)
+			{
+				for (size_t j = 0; j < 3; j++)
+				{
+					matrix.v[i][j] = v[i][j];
+				}
+			}
+			BOOL ret = MagSetWindowTransform((HWND)hwnd, &matrix);
+			return ret;
 		});
+	
+	//get and set mag window source
 	module.def("MagGetWindowSource", [](int hwnd)->std::tuple<long, long, long, long >
 		{
 			RECT magWindowRect;
@@ -60,23 +60,38 @@ PYBIND11_MODULE(pymagnification, module)
 			return std::make_tuple(magWindowRect.left, magWindowRect.top, magWindowRect.right, magWindowRect.bottom);
 
 		});
-	//get and set window filters
-	module.def("MagSetWindowFilterList", [](int hwnd, int dwFilterMode, int count, std::vector<int> pHWND)->BOOL 
+	module.def("MagSetWindowSource", [](int hwnd, long left, long top, long right, long bottom)->BOOL 
 		{
-
-			return MagSetWindowFilterList((HWND)hwnd, (DWORD)dwFilterMode, count,(HWND*)&(pHWND[0]));
+			RECT magWindowRect = { left,top,right,bottom };
+			return MagSetWindowSource((HWND)hwnd, magWindowRect);
 		});
+	
+	//get and set window filters
 	module.def("MagGetWindowFilterList", [](int hwnd)->std::tuple<int,int ,std::vector<int>>
 		{
 			DWORD dwFilterMode;
-			int amount_of_window_handles=MagGetWindowFilterList((HWND)hwnd, &dwFilterMode,0,nullptr);
-				std::vector<int> hwnds(amount_of_window_handles);
-				amount_of_window_handles = MagGetWindowFilterList((HWND)hwnd, &dwFilterMode, amount_of_window_handles, (HWND*)hwnds.empty() ? NULL : (HWND*)&hwnds[0]);
-				return std::make_tuple(amount_of_window_handles, (int)dwFilterMode, hwnds);
+			int amountOfWindowHandles = MagGetWindowFilterList((HWND)hwnd, &dwFilterMode,0,nullptr);
+				std::vector<int> hwnds(amountOfWindowHandles);
+				amountOfWindowHandles = MagGetWindowFilterList((HWND)hwnd, &dwFilterMode, amountOfWindowHandles, (HWND*)hwnds.empty() ? NULL : (HWND*)&hwnds[0]);
+				return std::make_tuple(amountOfWindowHandles, (int)dwFilterMode, hwnds);
 			
 		});
-	//init and unint mag
-	module.def("MagInitialize", &MagInitialize);
-	module.def("MagUninitialize", &MagUninitialize);
+	module.def("MagSetWindowFilterList", [](int hwnd, int dwFilterMode, int count, std::vector<int> pHWND)->BOOL
+		{
+
+			return MagSetWindowFilterList((HWND)hwnd, (DWORD)dwFilterMode, count, (HWND*)&(pHWND[0]));
+		});
+
+	//get and set window full screen transform
+	module.def("MagSetFullscreenTransform", &MagSetFullscreenTransform);
+	module.def("MagGetFullscreenTransform", []()->std::tuple<float, int, int,int> 
+		{
+			float pMagLevel = NULL;
+			int pxOffset = NULL;
+			int pyOffset = NULL;
+			int successStatus = MagGetFullscreenTransform(&pMagLevel, &pxOffset, &pyOffset);
+			return std::tuple(pMagLevel, pxOffset, pyOffset, successStatus);
+
+	});
 
 }

@@ -4,6 +4,8 @@ README.md
 setup.cfg
 setup.py
 pymagnification/__init__.py
+pymagnification/pymagnification.pyd
+pymagnification/pymagnification.pyi
 pymagnification.egg-info/PKG-INFO
 pymagnification.egg-info/SOURCES.txt
 pymagnification.egg-info/dependency_links.txt
