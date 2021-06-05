@@ -353,3 +353,5 @@ out/
 vsstudio/
 CMakeLists.txt
 CMakeSettings.json
+externals/
+package/pymagnification/dist/
