@@ -1,1 +1,1 @@
-include  *.pyd *.pyi
+recursive-include pymagnification  *.pyd *.pyi

@@ -6,7 +6,7 @@ with open('README.md', mode='r', encoding='utf-8') as fd:
 setup(
     name='pymagnification',
     packages=['pymagnification'],
-    version='0.0.3',
+    version='0.0.2',
     license='MIT',
     description='Python wrapper to the windows magnification api',
     author='Aviv Ostrovsky',
