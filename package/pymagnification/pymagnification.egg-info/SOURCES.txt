@@ -1,0 +1,10 @@
+LICENSE.txt
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+pymagnification/__init__.py
+pymagnification.egg-info/PKG-INFO
+pymagnification.egg-info/SOURCES.txt
+pymagnification.egg-info/dependency_links.txt
+pymagnification.egg-info/top_level.txt

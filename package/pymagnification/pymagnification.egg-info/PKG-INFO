@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: pymagnification
+Version: 0.0.3
+Summary: Python wrapper to the windows magnification api
+Home-page: https://github.com/avivost/pymagnification
+Author: Aviv Ostrovsky
+Author-email: ostrovsky.aviv@gmail.com
+License: MIT
+Download-URL: https://github.com/avivost/pymagnification/archive/refs/tags/v0.0.1.zip
+Keywords: winuse32,pywin32,python,UI,magnification,pymagnification
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# Pymagnification
+### Magnify Windows UI elements using Python
+
+
+
+Pymagnification is a Python wrapper to the C++ Windows Magnification API, with easy Pywin32 integration. <br />
+the original API : https://docs.microsoft.com/en-us/previous-versions/windows/desktop/magapi/entry-magapi-sdk
+
+#### Supported functions
+MagInitialize <br />
+MagUninitialize <br />
+MagSetWindowTransform <br />
+MagGetWindowTransform <br />
+MagSetWindowSource <br />
+MagGetWindowSource <br />
+MagSetWindowFilterList <br />
+MagGetWindowFilterList <br />
+
+Their full signature and description can be found in the stub file.
+

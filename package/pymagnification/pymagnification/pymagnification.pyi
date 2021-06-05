@@ -8,6 +8,12 @@ MW_FILTERMODE_EXCLUDE: int
 MW_FILTERMODE_INCLUDE: int
 
 
+def MagInitialize() -> None: ...
+
+
+def MagUninitialize() -> None: ...
+
+
 def MagSetWindowTransform(hwnd: int, matrix: Iterable[Iterable[float, float, float],
                                                       Iterable[float, float, float],
                                                       Iterable[float, float, float]]) -> int:
@@ -52,7 +58,9 @@ def MagGetWindowSource(hwnd: int) -> Tuple[int, int, int, int]:
     :return: A tuple of the bounds of the magnified window rectangle(left, top, right , bottom )
 
     """
-def MagSetWindowFilterList(hwnd : int ,dwFilterMode : int,count: int , pHWND :List[int])->int:
+
+
+def MagSetWindowFilterList(hwnd: int, dwFilterMode: int, count: int, pHWND: List[int]) -> int:
     """
     
     :param hwnd: The handle of the magnification window.
@@ -65,7 +73,8 @@ def MagSetWindowFilterList(hwnd : int ,dwFilterMode : int,count: int , pHWND :Li
     Returns 1 if successful, or 0 otherwise.
     """
 
-def MagGetWindowFilterList(hwnd:int)->Tuple[int,int,List[int]]:
+
+def MagGetWindowFilterList(hwnd: int) -> Tuple[int, int, List[int]]:
     """
 
     :param hwnd: The magnification window.
@@ -75,4 +84,3 @@ def MagGetWindowFilterList(hwnd:int)->Tuple[int,int,List[int]]:
     - The filter mode.
     - The list of window handles.
     """
-
