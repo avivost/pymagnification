@@ -12,7 +12,7 @@ setup(
     author='Aviv Ostrovsky',
     author_email='ostrovsky.aviv@gmail.com',
     url='https://github.com/avivost/pymagnification',
-    download_url='https://github.com/avivost/pymagnification/archive/refs/tags/v0.0.1.zip',
+    download_url='https://github.com/avivost/pymagnification/archive/refs/tags/v0.0.2.zip',
     keywords=['winuse32', 'pywin32', 'python', 'UI', 'magnification', 'pymagnification'],
     install_requires=[],
     include_package_data=True,
