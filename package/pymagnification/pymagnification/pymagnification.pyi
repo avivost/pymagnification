@@ -17,7 +17,7 @@ def MagUninitialize() -> None: ...
 def MagSetWindowTransform(hwnd: int, matrix: Iterable[Iterable[float, float, float],
                                                       Iterable[float, float, float],
                                                       Iterable[float, float, float]]) -> int:
-    """
+    '''
     Sets the transformation matrix for a magnifier control.
 
     Parameters
@@ -31,13 +31,13 @@ def MagSetWindowTransform(hwnd: int, matrix: Iterable[Iterable[float, float, flo
     -------
     int
         Returns 1 if successful, or 0 otherwise.
-    """
+    '''
 
 
 def MagGetWindowTransform(hwnd: int) -> (Iterable[Iterable[float, float, float],
                                                   Iterable[float, float, float],
                                                   Iterable[float, float, float]]):
-    """
+    '''
     Retrieves the transformation matrix associated with a magnifier control.
 
     Parameters
@@ -49,11 +49,11 @@ def MagGetWindowTransform(hwnd: int) -> (Iterable[Iterable[float, float, float],
     -------
     Iterable
         A 3x3 matrix of the magnification transformation matrix
-    """
+    '''
 
 
 def MagSetWindowSource(hwnd: int, left: int, top: int, right: int, bottom: int) -> int:
-    """
+    '''
 
     Parameters
     ----------
@@ -71,11 +71,11 @@ def MagSetWindowSource(hwnd: int, left: int, top: int, right: int, bottom: int) 
     -------
     int
         Returns 1 if successful, or 0 otherwise.
-    """
+    '''
 
 
 def MagGetWindowSource(hwnd: int) -> Tuple[int, int, int, int]:
-    """
+    '''
     Parameters
     ----------
     hwnd
@@ -85,11 +85,11 @@ def MagGetWindowSource(hwnd: int) -> Tuple[int, int, int, int]:
     tuple
         A tuple of the bounds of the magnified window rectangle(left, top, right , bottom)
 
-    """
+    '''
 
 
 def MagSetWindowFilterList(hwnd: int, dwFilterMode: int, count: int, pHWND: List[int]) -> int:
-    """
+    '''
 
     Parameters
     ----------
@@ -109,11 +109,10 @@ def MagSetWindowFilterList(hwnd: int, dwFilterMode: int, count: int, pHWND: List
         Returns 1 if successful, or 0 otherwise
 
 
-    """
-
+    '''
 
 def MagGetWindowFilterList(hwnd: int) -> Tuple[int, int, List[int]]:
-    """
+    '''
 
     Parameters
     ----------
@@ -129,11 +128,10 @@ def MagGetWindowFilterList(hwnd: int) -> Tuple[int, int, List[int]]:
             - The list of window handles.
 
 
-    """
-
+    '''
 
 def MagSetFullscreenTransform(magLevel: float, xOffset: int, yOffset: int) -> int:
-    """
+    '''
     Changes the magnification settings for the full-screen magnifier.
 
     Parameters
@@ -156,11 +154,10 @@ def MagSetFullscreenTransform(magLevel: float, xOffset: int, yOffset: int) -> in
     -------
     int
         Returns 1 if successful. Otherwise, 0.
-    """
+    '''
 
-
-def MagGetFullscreenTransform() -> Tuple[float, int, int, int]:
-    """
+def MagGetFullscreenTransform()->Tuple[float,int,int,int]:
+    '''
     Retrieves the magnification settings for the full-screen magnifier.
 
     Returns
@@ -175,4 +172,8 @@ def MagGetFullscreenTransform() -> Tuple[float, int, int, int]:
          the y-coordinate offset
     successStatus : int
          1 if successful. Otherwise, 0.
-    """
+
+
+
+
+    '''
