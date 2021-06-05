@@ -84,7 +84,6 @@ def MagGetWindowSource(hwnd: int) -> Tuple[int, int, int, int]:
     -------
     tuple
         A tuple of the bounds of the magnified window rectangle(left, top, right , bottom)
-
     '''
 
 
@@ -111,6 +110,7 @@ def MagSetWindowFilterList(hwnd: int, dwFilterMode: int, count: int, pHWND: List
 
     '''
 
+
 def MagGetWindowFilterList(hwnd: int) -> Tuple[int, int, List[int]]:
     '''
 
@@ -129,6 +129,7 @@ def MagGetWindowFilterList(hwnd: int) -> Tuple[int, int, List[int]]:
 
 
     '''
+
 
 def MagSetFullscreenTransform(magLevel: float, xOffset: int, yOffset: int) -> int:
     '''
@@ -156,24 +157,16 @@ def MagSetFullscreenTransform(magLevel: float, xOffset: int, yOffset: int) -> in
         Returns 1 if successful. Otherwise, 0.
     '''
 
-def MagGetFullscreenTransform()->Tuple[float,int,int,int]:
+
+def MagGetFullscreenTransform() -> Tuple[float, int, int, int]:
     '''
     Retrieves the magnification settings for the full-screen magnifier.
 
-    Returns
-    -------
-        tuple
+    Returns:
 
-    magLevel : float
-        the full-screen magnifier factor
-    xOffset : int
-         the x-coordinate offset
-    yOffset : int
-         the y-coordinate offset
-    successStatus : int
-         1 if successful. Otherwise, 0.
-
-
-
-
+    tuple : a tuple containing:
+        - magLevel (float): the full-screen magnifier factor
+        - xOffset (int): the x-coordinate offset
+        - yOffset(int): the y-coordinate offset
+        - successStatus(int): 1 if successful. Otherwise, 0.
     '''
